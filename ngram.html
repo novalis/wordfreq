@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>
+Word Freq
+</title>
+<script>
+  function submit_the_form(ngram) {
+    var form = document.getElementById("form");
+    form.choice.value = ngram;
+    form.submit();
+  }
+</script>
+<style>
+
+.ngrams {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ngram {
+  font-size: 200%;
+  width: max-content;
+  flex-basis: 45%;
+}
+
+.ngram-right {
+  text-align: right;
+}
+
+.or {
+  flex-basis: 5%;
+  font-size: 200%;
+}
+
+.borderme {
+  border: 1px solid black;
+  padding: 10px;
+  display: inline-block;
+}
+
+.ngram :hover {
+  background-color: #eeffff;
+}
+</style>
+</head>
+<body>
+
+ {%- if prev -%}
+    {%- if correct -%}
+      <h1>Correct!</h1><br/>
+    {%- else -%}
+      <h1>Wrong!</h1><br/>
+    {%- endif -%}
+</h1>
+    <br/>
+
+    &quot;{{popularngram}}&quot; appeared {{popularfreq}} times in the Google ngrams dataset, while &quot;{{unpopularngram}}&quot; only appeared {{unpopularfreq}} times.
+
+    <hr />
+ {%- endif %}</li>
+
+
+<form action="/" method="post" id="dform">
+Set difficulty (range is 1-100):
+<input type="difficulty" name="difficulty" value="{{difficulty}}" />
+<input type="submit" name="set" value="set difficulty">
+<input type="hidden" name="secret" value="{{secret}}" />
+</form>
+
+Which of these terms was more common in English-language books, as of 2012?<br/><br/><br/>
+<form action="/" method="post" id="form">
+
+<input type="hidden" name="difficulty" value="{{difficulty}}" />
+<input type="hidden" name="secret" value="{{secret}}" />
+<input type="hidden" name="iv" value="{{iv}}" />
+<input type="hidden" name="choice" value="" />
+
+<div class="ngrams">
+<div class="ngram">
+<span class="borderme">&quot;<a href="#" onclick="submit_the_form('{{ngram1}}');return false;">{{ngram1}}</a>&quot;
+</span>
+</div>
+
+<span class="or">
+ or
+</span>
+
+<div class="ngram ngram-right">
+<span class="borderme">
+&quot;<a href="#" onclick="submit_the_form('{{ngram2}}'); return false;">{{ngram2}}</a>&quot;?
+</span>
+</div>
+</div>
+
+</div>
+</form>
+
+So far, you have gotten {{ncorrect}} out of {{ntried}}
+
+{%- if prev -%}
+ &nbsp;({{ ratio }}%).
+{%-  endif -%}
+</body>
+</html>
